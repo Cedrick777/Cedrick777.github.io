@@ -191,13 +191,13 @@ footer{padding:20px max(5vw,16px);font-size:14px;color:#7f97ae;border-top:1px so
     </div>
     </div>
     <div class="me-wrap">
-      <div class="por" id="por">
+      <div class="por still" id="por">
         <img src="img/ced.jpg" alt="Portrait of Cedrick John Karlo Cruz">
         <div class="eye" data-box="318,296,70,30" data-sp="333,295,34" data-m="img/openL.png"><img src="img/irisL.png" alt=""></div>
         <div class="eye" data-box="440,292,64,32" data-sp="450,293,34" data-m="img/openR.png"><img src="img/irisR.png" alt=""></div>
         <img class="orig" src="img/ced-orig.jpg" alt="">
       </div>
-      <button type="button" class="eyetog" id="eyeTog" aria-pressed="true"><i></i><span>Eyes follow cursor</span></button>
+      <button type="button" class="eyetog" id="eyeTog" aria-pressed="false"><i></i><span>Eyes follow cursor</span></button>
     </div>
   </div>
 </header>
@@ -438,14 +438,14 @@ const eyes=[...document.querySelectorAll('.eye')].map(el=>{
  return {el,im,sz};
 });
 const MX=4,UP=1.5,DOWN=0.8;
-let px=null,py=null,last=0,tx=0,ty=0,x=0,y=0,nextJump=0,nextIdle=0,on=true,running=false;
+let px=null,py=null,last=0,tx=0,ty=0,x=0,y=0,nextJump=0,nextIdle=0,on=false,running=false;
 addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;last=performance.now()},{passive:true});
 addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;last=performance.now()},{passive:true});
 const tog=document.getElementById('eyeTog');
-try{if(localStorage.getItem('ced-eyes')==='off')on=false}catch(e){}
+try{if(localStorage.getItem('ced-eyes-v2')==='on')on=true}catch(e){}
 function setOn(v){
  on=v;tog.setAttribute('aria-pressed',v);
- try{localStorage.setItem('ced-eyes',v?'on':'off')}catch(e){}
+ try{localStorage.setItem('ced-eyes-v2',v?'on':'off')}catch(e){}
  document.getElementById('por').classList.toggle('still',!v);
  if(!v){x=y=tx=ty=0;for(const e of eyes)e.im.style.transform=''}
  else if(!running&&motionOK){running=true;requestAnimationFrame(frame)}
