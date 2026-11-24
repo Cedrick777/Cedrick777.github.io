@@ -55,6 +55,8 @@ nav ul a:hover{color:var(--ink)}
 .eye{position:absolute;overflow:hidden;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
 .eye img{position:absolute;display:block;will-change:transform}
 .me-wrap{gap:14px}
+.por>img.orig{z-index:2;opacity:0;transition:opacity .25s}
+.por.still>img.orig{opacity:1}
 .eyetog{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 10px;border-radius:999px;border:1.5px solid var(--line);background:rgba(16,34,58,.85);font-weight:600;font-size:15px}
 .eyetog:hover{border-color:var(--sky)}
 .eyetog i{flex:none;width:40px;height:24px;border-radius:12px;background:var(--line);position:relative;transition:background .2s}
@@ -193,6 +195,7 @@ footer{padding:20px max(5vw,16px);font-size:14px;color:#7f97ae;border-top:1px so
         <img src="img/ced.jpg" alt="Portrait of Cedrick John Karlo Cruz">
         <div class="eye" data-box="318,296,70,30" data-sp="333,295,34" data-m="img/openL.png"><img src="img/irisL.png" alt=""></div>
         <div class="eye" data-box="440,292,64,32" data-sp="450,293,34" data-m="img/openR.png"><img src="img/irisR.png" alt=""></div>
+        <img class="orig" src="img/ced-orig.jpg" alt="">
       </div>
       <button type="button" class="eyetog" id="eyeTog" aria-pressed="true"><i></i><span>Eyes follow cursor</span></button>
     </div>
@@ -443,6 +446,7 @@ try{if(localStorage.getItem('ced-eyes')==='off')on=false}catch(e){}
 function setOn(v){
  on=v;tog.setAttribute('aria-pressed',v);
  try{localStorage.setItem('ced-eyes',v?'on':'off')}catch(e){}
+ document.getElementById('por').classList.toggle('still',!v);
  if(!v){x=y=tx=ty=0;for(const e of eyes)e.im.style.transform=''}
  else if(!running&&motionOK){running=true;requestAnimationFrame(frame)}
 }
@@ -463,7 +467,7 @@ function frame(now){
  if(on)requestAnimationFrame(frame);else running=false;
 }
 const motionOK=eyes.length===2&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(!motionOK)tog.hidden=true;
+if(!motionOK){tog.hidden=true;on=false}
 setOn(on);
 }
 }
