@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ced Cruz Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* VOICE  a hiring pitch: confident, scannable in 30 seconds, proof over adjectives
+   IDEA   a working analytics workspace at night: the page behaves like one of Ced's dashboards
+   PICTURE Higgsfield night-skyline hero, then a live coverage dashboard the visitor can break and fix
+   COLOUR fixed night palette: ground #0b1726, panels #10223a, sky #4fb3e8 leads marks, orange #ff7a1a for the one thing that matters
+   TYPE   Outfit 600 display + Inter text, mono only for the Tableau calc
+   LAYOUT hero full-bleed with pitch lower-left; skills explorer band; demo split chart/controls; case explorer tabs; compact proof; contact */
+:root{color-scheme:dark;--bg:#0b1726;--panel:#10223a;--panel2:#152b47;--line:#24405f;--ink:#eaf2f9;--soft:#a3b8cc;--sky:#4fb3e8;--org:#ff7a1a;--ok:#5fd39a}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,3.6vw,44px);margin-bottom:12px}
+h3{font-size:22px}
+p{margin:0 0 1em;max-width:66ch}
+.band{padding-block:clamp(40px,6vw,84px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.lede{color:var(--soft);font-size:17px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+nav{position:sticky;top:0;z-index:9;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;justify-content:space-between;padding:10px max(5vw,16px);background:rgba(11,23,38,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .me{font:600 19px Outfit,sans-serif;text-decoration:none}
+nav ul{display:flex;flex-wrap:wrap;gap:0 18px;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;color:var(--soft);padding:10px 0;display:inline-block;font-weight:500}
+nav ul a:hover{color:var(--ink)}
+.hero{position:relative;min-height:min(86svh,780px);display:grid;align-items:end;background:#0b1726}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,23,38,.1) 30%,rgba(11,23,38,.95) 92%)}
+.hero .txt{position:relative;z-index:1;padding:0 max(5vw,16px) clamp(28px,5vw,64px);max-width:1240px;width:100%;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:end}
+.hero h1{font-size:clamp(38px,5.6vw,68px);margin-bottom:14px}
+.hero p{font-size:clamp(17px,1.5vw,19px);color:#d3e2ef}
+.who{font-weight:600;color:var(--sky);margin-bottom:10px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1.5px solid var(--line);background:rgba(16,34,58,.8)}
+.btn.pri{background:var(--org);border-color:var(--org);color:#10223a}
+.btn:hover{border-color:var(--sky)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.facts div{background:rgba(16,34,58,.82);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.facts b{display:block;font:600 30px/1 Outfit,sans-serif}
+.facts span{font-size:14px;color:var(--soft)}
+.roles{background:var(--panel)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 26px}
+.seg button{min-height:46px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);font-weight:600}
+.seg button[aria-pressed=true]{background:var(--sky);border-color:var(--sky);color:#0b1726}
+.fit{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,48px)}
+.fit h3{font-size:clamp(24px,2.6vw,32px);margin-bottom:10px}
+.proof{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.proof li{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 44px;position:relative}
+.proof li::before{content:"";position:absolute;left:16px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--ok)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:14px 0 0}
+.chips li{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;font-weight:500;background:var(--bg)}
+.chips li.on{border-color:var(--sky);color:var(--sky)}
+.seg .cnt{opacity:.7;font-weight:500;margin-left:4px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10.5em,1fr));gap:10px;align-content:start}
+.sgrid button{text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;min-height:64px}
+.sgrid button b{display:block;font:600 16px/1.25 Outfit,sans-serif}
+.sgrid button span{font-size:14px;color:var(--soft)}
+.sgrid button:hover{border-color:var(--sky)}
+.sgrid button[aria-pressed=true]{border-color:var(--sky);background:var(--panel2);box-shadow:inset 4px 0 0 var(--sky)}
+.sdet{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,2.4vw,28px);align-self:start}
+.sdet .lv{font-size:14px;font-weight:600;color:var(--sky)}
+.sdet h3{font-size:clamp(24px,2.6vw,32px);margin:6px 0 10px}
+.sdet h4{margin:14px 0 8px;font:600 15px Outfit,sans-serif;color:var(--soft)}
+.used{display:flex;flex-wrap:wrap;gap:8px}
+.used button{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--org);background:transparent;font-weight:600}
+.used button:hover{background:rgba(255,122,26,.15)}
+.demo{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;margin-top:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,2.4vw,26px)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.kpi span{display:block;font-size:14px;color:var(--soft)}
+.kpi b{font:600 clamp(28px,3.4vw,42px)/1.1 Outfit,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+.kpi b.bad{color:var(--org)}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:5.5em minmax(0,1fr) 3.6em;gap:10px;align-items:center;font-size:15px}
+.bar .tr{height:26px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative}
+.bar .fl{height:100%;background:var(--sky);border-radius:6px;transition:width .5s ease}
+.bar .tg{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.7}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.bar.low .fl{background:var(--org)}
+.legend{font-size:14px;color:var(--soft);margin-top:12px}
+.ctl h3{font-size:18px;margin:0 0 8px}
+.ctl .grp{margin-bottom:18px}
+.tg2{display:flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.tg2 button{flex:1;min-height:44px;border:0;background:transparent;font-weight:600;padding:0 10px}
+.tg2 button[aria-pressed=true]{background:var(--sky);color:#0b1726}
+.sw{display:flex;gap:12px;align-items:center;min-height:44px;width:100%;border:1.5px solid var(--line);border-radius:12px;background:transparent;padding:8px 12px;text-align:left;font-weight:600}
+.sw i{flex:none;width:40px;height:24px;border-radius:12px;background:var(--line);position:relative;transition:.2s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--ink);transition:.2s}
+.sw[aria-pressed=true] i{background:var(--org)}
+.sw[aria-pressed=true] i::after{left:19px}
+.zones{display:flex;flex-wrap:wrap;gap:6px}
+.zones button{min-height:40px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:transparent;font-weight:500;font-size:14px}
+.zones button[aria-pressed=true]{border-color:var(--sky);background:rgba(79,179,232,.15)}
+pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;font:13.5px/1.5 "JetBrains Mono",monospace;overflow-x:auto;color:#cfe6f7;white-space:pre-wrap}
+.msg{border-left:3px solid var(--sky);padding:4px 0 4px 12px;color:var(--soft);font-size:15px;margin-top:12px}
+.msg.warn{border-color:var(--org);color:var(--ink)}
+.note{font-size:14px;color:var(--soft)}
+.cx{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:20px;margin-top:24px}
+.tabs{display:grid;gap:8px;align-content:start}
+.tabs button{text-align:left;border:1.5px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;min-height:44px}
+.tabs button b{display:block;font:600 17px/1.25 Outfit,sans-serif}
+.tabs button span{font-size:14px;color:var(--soft)}
+.tabs button[aria-selected=true]{border-color:var(--sky);background:var(--panel2)}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.pane .art{aspect-ratio:16/8;background:#0d1d31;position:relative;overflow:hidden}
+.pane .art img,.pane .art svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pane .body{padding:clamp(16px,2.4vw,28px)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:16px 0}
+.steps div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}
+.steps h4{margin:0 0 6px;font:600 15px Outfit,sans-serif;color:var(--sky)}
+.steps p{font-size:15px;margin:0}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:14px;padding-bottom:18px}
+.tl li::before{content:"";width:14px;height:14px;border-radius:50%;border:3px solid var(--sky);margin-top:5px}
+.tl li:first-child::before{background:var(--org);border-color:var(--org)}
+.tl b{font:600 18px Outfit,sans-serif;display:block}
+.tl span{color:var(--soft);font-size:15px}
+.certs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cert{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg)}
+.cert b{font:600 20px Outfit,sans-serif;display:block}
+.cert span{font-size:14px;color:var(--soft)}
+.road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.road div{border-top:4px solid var(--sky);background:var(--bg);border-radius:0 0 10px 10px;padding:10px 12px;font-size:15px;font-weight:500}
+.contact{background:linear-gradient(135deg,#123257,#0b1726)}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15em,1fr));gap:12px;margin-top:22px}
+.cgrid a,.cgrid button{display:block;text-align:left;padding:16px 18px;border:1.5px solid var(--line);border-radius:14px;background:rgba(16,34,58,.7);text-decoration:none;min-height:44px}
+.cgrid a:hover,.cgrid button:hover{border-color:var(--org)}
+.cgrid b{display:block;font:600 18px Outfit,sans-serif}
+.cgrid span{color:var(--soft);overflow-wrap:anywhere;font-size:15px}
+footer{padding:20px max(5vw,16px);font-size:14px;color:#7f97ae;border-top:1px solid var(--line)}
+@media(max-width:900px){.hero .txt,.fit,.demo,.cx,.two{grid-template-columns:minmax(0,1fr)}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.steps,.road{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpi b{font-size:24px}.tabs{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:4.6em minmax(0,1fr) 3.4em}nav ul{gap:0 14px}.certs{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+  <a class="me" href="#top">Ced Cruz</a>
+  <ul>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#demo">Live demo</a></li>
+    <li><a href="#work">Case studies</a></li>
+    <li><a href="#about">Background</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <img src="img/hero.jpg" alt="Glowing chart panels and data streams over a city skyline at night">
+  <div class="txt">
+    <div>
+      <div class="who">Analytics Engineer &amp; Automation Developer</div>
+      <h1>Cedrick John Karlo Cruz</h1>
+      <p>Analytics engineer and automation developer at Schneider Electric, with 5+ years across finance, insurance and tech. I build the data pipelines and models behind the dashboards, and automate the manual work around the numbers.</p>
+      <div class="btns">
+        <a class="btn pri" href="#demo">Try the live demo</a>
+        <a class="btn" href="#skills">See my skills</a>
+      </div>
+    </div>
+    <div class="facts" aria-label="At a glance">
+      <div><b>5+ yrs</b><span>Schneider Electric, EY GDS, Accenture</span></div>
+      <div><b>13</b><span>views in my biggest Tableau migration</span></div>
+      <div><b>4</b><span>certs: UiARD, AZ-900, PL-900, AI-900</span></div>
+      <div><b>PH</b><span>Manila-based, open to relocation</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="band roles" id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <p class="lede">Filter by area, then pick a skill to see where I've used it.</p>
+    <div class="seg" role="group" aria-label="Skill area" id="cats"></div>
+    <div class="fit">
+      <div class="sgrid" id="sgrid"></div>
+      <div class="sdet" id="sdet" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="demo">
+  <div class="wrap">
+    <h2>Break a dashboard, then watch me fix it</h2>
+    <p class="lede">A small coverage dashboard in the style of my Tableau work. Switch the coverage logic, filter zones, and turn on the join bug I spend a lot of time hunting in real data models.</p>
+    <div class="demo">
+      <div class="card">
+        <div class="kpis">
+          <div class="kpi"><span>Coverage</span><b id="kCov">0%</b></div>
+          <div class="kpi"><span>Sites counted</span><b id="kSites">0</b></div>
+          <div class="kpi"><span>Zones below 75%</span><b id="kLow">0</b></div>
+        </div>
+        <div class="bars" id="bars"></div>
+        <div class="legend">Bars show coverage by zone. The thin line marks the 75% target; zones under it turn orange.</div>
+        <div class="msg" id="msg"></div>
+      </div>
+      <div class="card ctl">
+        <div class="grp">
+          <h3>Coverage logic</h3>
+          <div class="tg2" role="group" aria-label="Coverage logic">
+            <button type="button" id="mSimple" aria-pressed="false">Site count</button>
+            <button type="button" id="mWeighted" aria-pressed="true">Weighted</button>
+          </div>
+        </div>
+        <div class="grp">
+          <h3>Data model</h3>
+          <button type="button" class="sw" id="fan" aria-pressed="false"><i></i><span>Join contacts table (causes fan-out)</span></button>
+        </div>
+        <div class="grp">
+          <h3>Zones</h3>
+          <div class="zones" id="zones"></div>
+        </div>
+        <div class="grp" style="margin:0">
+          <h3>The Tableau calc behind it</h3>
+          <pre id="calc"></pre>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px">Sample data made up for this demo. No company data is used anywhere on this site.</p>
+  </div>
+</section>
+
+<section class="band" id="work" style="background:var(--panel)">
+  <div class="wrap">
+    <h2>Case studies</h2>
+    <p class="lede">Real projects, described by the problem and the build. Numbers stay with my employer.</p>
+    <div class="cx">
+      <div class="tabs" role="tablist" aria-label="Case studies" id="tabs"></div>
+      <div class="pane" role="tabpanel" id="pane" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="about">
+  <div class="wrap two">
+    <div>
+      <h2>Background</h2>
+      <ol class="tl">
+        <li><div><b>Schneider Electric</b><span>Digital Applications &amp; Data Visualization Developer · current</span><p style="margin:6px 0 0;font-size:15px">Tableau, Tableau Prep and Power Automate for finance and operations teams. On the interview panel for junior and senior Tableau developer hires.</p></div></li>
+        <li><div><b>EY GDS Philippines</b><span>Data and automation</span></div></li>
+        <li><div><b>Accenture</b><span>Data and automation</span></div></li>
+        <li><div><b>Jose Rizal University</b><span>BS Electronics Engineering · Licensed Electronics Engineer</span></div></li>
+      </ol>
+    </div>
+    <div>
+      <h2>Certifications</h2>
+      <div class="certs">
+        <div class="cert"><b>UiARD</b><span>UiPath Advanced RPA Developer</span></div>
+        <div class="cert"><b>AZ-900</b><span>Azure Fundamentals</span></div>
+        <div class="cert"><b>PL-900</b><span>Power Platform Fundamentals</span></div>
+        <div class="cert"><b>AI-900</b><span>Azure AI Fundamentals</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band contact" id="contact">
+  <div class="wrap">
+    <h2>Let's talk about your team's data</h2>
+    <p class="lede">Open to Tableau / BI, analytics engineering and automation roles, in Manila or abroad, and to freelance dashboard work.</p>
+    <div class="cgrid">
+      <button type="button" id="copy"><b>Email</b><span id="copyT">cedrickcruz11@gmail.com · click to copy</span></button>
+      <a href="https://www.linkedin.com/in/cedrickcruz/"><b>LinkedIn</b><span>linkedin.com/in/cedrickcruz</span></a>
+      <a href="https://github.com/Cedrick777"><b>GitHub</b><span>github.com/Cedrick777</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Cedrick John Karlo Cruz · Pasig City, Philippines · Hero and case study images generated with Higgsfield</footer>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- skills ---------- */
+const CATS=['All','Visualization','Automation','Data & code','Cloud'];
+const skills=[
+ {n:'Tableau Desktop',c:'Visualization',lv:'Core stack',d:'Dashboards from executive summary down to team level, including a 13-view migration suite.',u:['coverage','otcost']},
+ {n:'Tableau Prep',c:'Visualization',lv:'Core stack',d:'Flat-file pipelines that replace manual spreadsheet steps, documented so others can own them.',u:['coverage','otcost','prep']},
+ {n:'LOD expressions',c:'Visualization',lv:'Core stack',d:'Weighted coverage, FIXED-level fixes for duplicated rows, and null-guard patterns.',u:['coverage']},
+ {n:'Data modeling',c:'Visualization',lv:'Core stack',d:'Multi-join models in Tableau: finding fan-out bugs and chasm traps, then reconciling old and new numbers.',u:['coverage']},
+ {n:'Dashboard design',c:'Visualization',lv:'Used daily',d:'Layered views for leaders and operators, with drill paths from summary to zone.',u:['coverage']},
+ {n:'Power Automate',c:'Automation',lv:'Core stack',d:'Teams-triggered flows with access and routing kept in SharePoint lists, so business users can change them.',u:['notify']},
+ {n:'UiPath (RPA)',c:'Automation',lv:'Certified · UiARD',d:'UiPath Advanced RPA Developer (UiARD) certified.',u:[]},
+ {n:'SharePoint & Teams',c:'Automation',lv:'Used with Power Automate',d:'Lists as configuration and permissions, channels as triggers, folders as delivery.',u:['notify']},
+ {n:'SQL',c:'Data & code',lv:'Core stack',d:'Querying and shaping data for dashboards, including Databricks SQL.',u:['otcost']},
+ {n:'Python',c:'Data & code',lv:'Core stack',d:'Scripting and data work; supported a dashboard logic migration from Tableau Prep to Python.',u:['prep']},
+ {n:'Databricks',c:'Data & code',lv:'SQL and scheduled jobs',d:'SQL queries and scheduled jobs feeding reports.',u:[]},
+ {n:'Oracle GL exports',c:'Data & code',lv:'Pipeline source',d:'Turning general-ledger exports into clean, repeatable reporting inputs.',u:['otcost']},
+ {n:'Microsoft Azure',c:'Cloud',lv:'Certified · AZ-900, AI-900',d:'AZ-900 Azure Fundamentals and AI-900 Azure AI Fundamentals.',u:[]},
+ {n:'Power Platform',c:'Cloud',lv:'Certified · PL-900',d:'PL-900 Power Platform Fundamentals.',u:['notify']}
+];
+let cat='All',sk=skills[0].n;
+$('cats').innerHTML=CATS.map(c=>`<button type="button" data-c="${esc(c)}" aria-pressed="${c===cat}">${esc(c)} <span class="cnt">${c==='All'?skills.length:skills.filter(s=>s.c===c).length}</span></button>`).join('');
+$('cats').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;const f=skills.find(s=>cat==='All'||s.c===cat);if(f&&!(cat==='All'||skills.find(s=>s.n===sk).c===cat))sk=f.n;drawSkills()}));
+function drawSkills(){
+ $('cats').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===cat));
+ $('sgrid').innerHTML=skills.filter(s=>cat==='All'||s.c===cat).map(s=>`<button type="button" data-n="${esc(s.n)}" aria-pressed="${s.n===sk}"><b>${esc(s.n)}</b><span>${esc(s.lv)}</span></button>`).join('');
+ $('sgrid').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{sk=b.dataset.n;drawSkills()}));
+ const s=skills.find(x=>x.n===sk);
+ $('sdet').innerHTML=`<span class="lv">${esc(s.c)}</span><h3>${esc(s.n)}</h3><p>${esc(s.d)}</p>${s.u.length?`<h4>Used in</h4><div class="used">${s.u.map(id=>`<button type="button" data-go="${id}">${esc(cases[id].n)} →</button>`).join('')}</div>`:''}`;
+ $('sdet').querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{show(b.dataset.go);document.getElementById('work').scrollIntoView()}));
+}
+
+/* ---------- case studies ---------- */
+const svgFlow=(nodes,hl)=>`<svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="400" fill="#0d1d31"/><g stroke="#1c3554">${Array.from({length:21},(_,i)=>`<line x1="${i*40}" y1="0" x2="${i*40}" y2="400"/>`).join('')}${Array.from({length:11},(_,i)=>`<line x1="0" y1="${i*40}" x2="800" y2="${i*40}"/>`).join('')}</g>${nodes.map((n,i)=>i?`<path d="M${nodes[i-1][0]+60} ${nodes[i-1][1]} C${nodes[i-1][0]+110} ${nodes[i-1][1]},${n[0]-110} ${n[1]},${n[0]-60} ${n[1]}" fill="none" stroke="${hl.includes(i)?'#ff7a1a':'#4fb3e8'}" stroke-width="4"/>`:'').join('')}${nodes.map((n,i)=>`<rect x="${n[0]-60}" y="${n[1]-26}" width="120" height="52" rx="14" fill="#152b47" stroke="${hl.includes(i)?'#ff7a1a':'#4fb3e8'}" stroke-width="3"/><circle cx="${n[0]-36}" cy="${n[1]}" r="8" fill="${hl.includes(i)?'#ff7a1a':'#4fb3e8'}"/><rect x="${n[0]-20}" y="${n[1]-6}" width="62" height="12" rx="6" fill="#2b4a6e"/>`).join('')}</svg>`;
+const cases={
+ coverage:{n:'Service coverage in Tableau',k:'Tableau migration',img:'img/coverage.jpg',
+  prob:'A heavy Excel tool was the only view of service coverage, and it was slow to update and hard to trust.',
+  build:'A Tableau Prep flat-file pipeline feeding 13 dashboard views, from an executive summary down to zone and team level, with weighted coverage in LOD expressions.',
+  win:'Fixed fan-out bugs, a chasm trap and null cases, then produced reconciliation outputs so stakeholders could match old numbers to new.',
+  t:['Tableau Desktop','Tableau Prep','LOD','Data modeling']},
+ otcost:{n:'OT cost report pipeline',k:'Pipeline automation',img:'img/otcost.jpg',
+  prob:'Overtime cost reporting depended on manual exports and spreadsheet steps every cycle.',
+  build:'An automated path from general-ledger Oracle exports through Tableau Prep into Tableau Desktop.',
+  win:'One repeatable flow and one source of truth instead of hand-built spreadsheets.',
+  t:['Oracle exports','Tableau Prep','Tableau Desktop']},
+ notify:{n:'Zone upload notifications',k:'Power Automate',svg:svgFlow([[110,200],[300,120],[500,200],[690,110],[690,290]],[2]),
+  prob:'After each data upload, analysts had to tell every zone by hand where to find their files.',
+  build:'Analysts post "Uploaded" in a Teams channel. If the poster is on an authorized SharePoint list, the flow emails each zone\'s distribution list its SharePoint folder links.',
+  win:'Access and zone routing live in SharePoint lists, so the business can change them without touching the flow.',
+  t:['Power Automate','Teams','SharePoint']},
+ prep:{n:'Prep flow for a Python migration',k:'Mentoring',svg:svgFlow([[100,280],[260,140],[420,260],[560,130],[710,230]],[1,3]),
+  prob:'A junior teammate needed to move an OT dashboard\'s logic to Python without a clear reference.',
+  build:'I built the Tableau Prep flow and documented each transform step by step.',
+  win:'The business logic became portable between tools, and the teammate had a spec to code against.',
+  t:['Tableau Prep','Python','Documentation']}
+};
+let cur='coverage';
+const order=['coverage','otcost','notify','prep'];
+function renderTabs(first){
+ $('tabs').innerHTML=order.map(id=>`<button type="button" role="tab" id="t-${id}" data-id="${id}" aria-selected="false"><b>${esc(cases[id].n)}</b><span>${esc(cases[id].k)}</span></button>`).join('');
+ $('tabs').querySelectorAll('button').forEach(b=>{b.addEventListener('click',()=>show(b.dataset.id));});
+ show(first||cur);
+}
+function show(id){
+ cur=id;const c=cases[id];
+ $('tabs').querySelectorAll('button').forEach(b=>{const on=b.dataset.id===id;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1});
+ $('pane').setAttribute('aria-labelledby','t-'+id);
+ $('pane').innerHTML=`<div class="art">${c.img?`<img src="${c.img}" alt="">`:c.svg}</div><div class="body"><h3>${esc(c.n)}</h3><div class="steps"><div><h4>Problem</h4><p>${esc(c.prob)}</p></div><div><h4>What I built</h4><p>${esc(c.build)}</p></div><div><h4>Why it held up</h4><p>${esc(c.win)}</p></div></div><ul class="chips">${c.t.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+}
+$('tabs').addEventListener('keydown',e=>{
+ if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key))return;
+ e.preventDefault();const ids=order;let i=ids.indexOf(cur);
+ i=(i+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:ids.length-1))%ids.length;show(ids[i]);$('t-'+ids[i]).focus();
+});
+
+/* ---------- demo ---------- */
+let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+const ZN=['Zone A','Zone B','Zone C','Zone D','Zone E','Zone F'];
+const bias=[.9,.82,.7,.86,.62,.78];
+const sites=[];
+ZN.forEach((z,zi)=>{const n=40+Math.floor(rnd()*40);for(let i=0;i<n;i++){const w=Math.round(1+rnd()*rnd()*20);const cov=rnd()<bias[zi]+(w>8?.08:-.04);sites.push({z,w,cov,ct:rnd()<.35?(rnd()<.5?3:2):1})}});
+const st={w:true,fan:false,on:new Set(ZN)};
+$('zones').innerHTML=ZN.map(z=>`<button type="button" aria-pressed="true" data-z="${z}">${z}</button>`).join('');
+$('zones').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+ const z=b.dataset.z;if(st.on.has(z)){if(st.on.size>1)st.on.delete(z)}else st.on.add(z);draw()}));
+$('mSimple').onclick=()=>{st.w=false;draw()};
+$('mWeighted').onclick=()=>{st.w=true;draw()};
+$('fan').onclick=()=>{st.fan=!st.fan;draw()};
+function calc(list){let n=0,c=0,W=0,CW=0;list.forEach(s=>{const k=st.fan?s.ct:1;n+=k;c+=k*s.cov;W+=k*s.w;CW+=k*s.w*s.cov});return{n,v:st.w?CW/W:c/n}}
+const pct=v=>Math.round(v*1000)/10+'%';
+function draw(){
+ $('mSimple').setAttribute('aria-pressed',!st.w);$('mWeighted').setAttribute('aria-pressed',st.w);$('fan').setAttribute('aria-pressed',st.fan);
+ $('zones').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',st.on.has(b.dataset.z)));
+ const sel=sites.filter(s=>st.on.has(s.z)),all=calc(sel),truth=sel.length;
+ const rows=ZN.filter(z=>st.on.has(z)).map(z=>({z,...calc(sel.filter(s=>s.z===z))}));
+ $('kCov').textContent=pct(all.v);$('kSites').textContent=all.n;$('kSites').className=st.fan?'bad':'';
+ $('kLow').textContent=rows.filter(r=>r.v<.75).length;
+ $('bars').innerHTML=rows.map(r=>`<div class="bar${r.v<.75?' low':''}"><span>${esc(r.z)}</span><div class="tr"><div class="fl" style="width:${(r.v*100).toFixed(1)}%"></div><div class="tg" style="left:75%"></div></div><span class="v">${pct(r.v)}</span></div>`).join('');
+ const m=$('msg');
+ if(st.fan){m.className='msg warn';m.textContent=`Fan-out: joining contacts repeats sites with more than one contact, so ${truth} sites now count as ${all.n} and every zone's coverage drifts. Turn the join off, or fix the row level with a FIXED LOD as shown.`}
+ else{m.className='msg';m.textContent=st.w?'Weighted coverage: big sites count more, so a zone that misses its largest sites shows it. This is usually the number leaders actually care about.':'Site count treats every site the same. Simple, but one missed major site looks the same as one missed small site.'}
+ $('calc').textContent=st.fan
+  ?'// best fix: aggregate contacts to one row\n// per site before the join.\n// in-workbook fix: share each site\'s weight\n// across its duplicated rows\n[Row W] = [Weight] / {FIXED [Site ID]: COUNT([Site ID])}\n\nSUM(IF [Covered] THEN [Row W] END)\n/ SUM([Row W])'
+  :st.w?'// weighted coverage\nSUM(IF [Covered] THEN [Weight] END)\n/ SUM([Weight])':'// simple coverage\nCOUNTD(IF [Covered] THEN [Site ID] END)\n/ COUNTD([Site ID])';
+}
+draw();
+
+/* ---------- copy email ---------- */
+$('copy').addEventListener('click',async()=>{
+ const t=$('copyT');try{await navigator.clipboard.writeText('cedrickcruz11@gmail.com');t.textContent='Copied: cedrickcruz11@gmail.com'}catch(e){t.textContent='cedrickcruz11@gmail.com (select to copy)'}
+});
+
+renderTabs('coverage');
+drawSkills();
+}
+</script>
+</body>
+</html>
