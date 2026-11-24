@@ -141,7 +141,7 @@ pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:10p
 .cgrid b{display:block;font:600 18px Outfit,sans-serif}
 .cgrid span{color:var(--soft);overflow-wrap:anywhere;font-size:15px}
 footer{padding:20px max(5vw,16px);font-size:14px;color:#7f97ae;border-top:1px solid var(--line)}
-@media(max-width:900px){.hero .txt,.fit,.demo,.cx,.two{grid-template-columns:minmax(0,1fr)}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.hero .txt,.fit,.demo,.cx,.two{grid-template-columns:minmax(0,1fr)}.tabs{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.steps,.road{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpi b{font-size:24px}.tabs{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:4.6em minmax(0,1fr) 3.4em}nav ul{gap:0 14px}.certs{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -296,9 +296,10 @@ const skills=[
  {n:'Power Automate',c:'Automation',lv:'Core stack',d:'Teams-triggered flows with access and routing kept in SharePoint lists, so business users can change them.',u:['notify']},
  {n:'UiPath (RPA)',c:'Automation',lv:'Certified · UiARD',d:'UiPath Advanced RPA Developer (UiARD) certified.',u:[]},
  {n:'SharePoint & Teams',c:'Automation',lv:'Used with Power Automate',d:'Lists as configuration and permissions, channels as triggers, folders as delivery.',u:['notify']},
- {n:'SQL',c:'Data & code',lv:'Core stack',d:'Querying and shaping data for dashboards, including Databricks SQL.',u:['otcost']},
+ {n:'SQL',c:'Data & code',lv:'Core stack',d:'Querying and shaping data for dashboards, including Databricks SQL and post-load checks.',u:['etl','otcost']},
  {n:'Python',c:'Data & code',lv:'Core stack',d:'Scripting and data work; supported a dashboard logic migration from Tableau Prep to Python.',u:['prep']},
- {n:'Databricks',c:'Data & code',lv:'SQL and scheduled jobs',d:'SQL queries and scheduled jobs feeding reports.',u:[]},
+ {n:'Databricks',c:'Data & code',lv:'SQL, jobs and ingestion',d:'SQL queries and scheduled jobs feeding reports, plus clean, validated CSV loads into Databricks tables.',u:['etl']},
+ {n:'JavaScript & HTML',c:'Data & code',lv:'Browser-based tools',d:'In-browser ETL tools that read Excel files, clean and validate them, and write load-ready CSVs without uploading anything.',u:['etl']},
  {n:'Oracle GL exports',c:'Data & code',lv:'Pipeline source',d:'Turning general-ledger exports into clean, repeatable reporting inputs.',u:['otcost']},
  {n:'Microsoft Azure',c:'Cloud',lv:'Certified · AZ-900, AI-900',d:'AZ-900 Azure Fundamentals and AI-900 Azure AI Fundamentals.',u:[]},
  {n:'Power Platform',c:'Cloud',lv:'Certified · PL-900',d:'PL-900 Power Platform Fundamentals.',u:['notify']}
@@ -333,6 +334,11 @@ const cases={
   build:'Analysts post "Uploaded" in a Teams channel. If the poster is on an authorized SharePoint list, the flow emails each zone\'s distribution list its SharePoint folder links.',
   win:'Access and zone routing live in SharePoint lists, so the business can change them without touching the flow.',
   t:['Power Automate','Teams','SharePoint']},
+ etl:{n:'In-browser ETL for Databricks',k:'ETL tooling',svg:svgFlow([[90,130],[90,280],[300,200],[510,200],[710,200]],[3]),
+  prob:'Monthly Excel extracts came with different headers across sheets, codes turned into scientific notation (4.07E+09), and text in number columns, so loads into Databricks failed or came out wrong.',
+  build:'Two HTML and JavaScript tools. One merges a monthly extract and extra scope files into one Databricks-ready CSV: one header set across layouts, codes kept as full text, dates standardised, and shortened codes repaired only when a mapping proves the full value. The other checks a load file against the target table and view, and clears the cells that would break number columns.',
+  win:'Files never leave the browser. Every run shows checks per sheet, flags what needs a fix, and gives a query to run after loading so the numbers can be verified in Databricks.',
+  t:['HTML & JavaScript','Excel parsing','Databricks','SQL','Data quality checks']},
  prep:{n:'Prep flow for a Python migration',k:'Mentoring',svg:svgFlow([[100,280],[260,140],[420,260],[560,130],[710,230]],[1,3]),
   prob:'A junior teammate needed to move an OT dashboard\'s logic to Python without a clear reference.',
   build:'I built the Tableau Prep flow and documented each transform step by step.',
@@ -340,7 +346,7 @@ const cases={
   t:['Tableau Prep','Python','Documentation']}
 };
 let cur='coverage';
-const order=['coverage','otcost','notify','prep'];
+const order=['coverage','etl','otcost','notify','prep'];
 function renderTabs(first){
  $('tabs').innerHTML=order.map(id=>`<button type="button" role="tab" id="t-${id}" data-id="${id}" aria-selected="false"><b>${esc(cases[id].n)}</b><span>${esc(cases[id].k)}</span></button>`).join('');
  $('tabs').querySelectorAll('button').forEach(b=>{b.addEventListener('click',()=>show(b.dataset.id));});
