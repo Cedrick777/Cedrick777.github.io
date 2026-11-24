@@ -54,6 +54,13 @@ nav ul a:hover{color:var(--ink)}
 .por>img{position:absolute;inset:0;width:100%;height:100%;display:block}
 .eye{position:absolute;overflow:hidden;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
 .eye img{position:absolute;display:block;will-change:transform}
+.me-wrap{gap:14px}
+.eyetog{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 10px;border-radius:999px;border:1.5px solid var(--line);background:rgba(16,34,58,.85);font-weight:600;font-size:15px}
+.eyetog:hover{border-color:var(--sky)}
+.eyetog i{flex:none;width:40px;height:24px;border-radius:12px;background:var(--line);position:relative;transition:background .2s}
+.eyetog i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--ink);transition:left .2s}
+.eyetog[aria-pressed=true] i{background:var(--sky)}
+.eyetog[aria-pressed=true] i::after{left:19px}
 .facts span{font-size:14px;color:var(--soft)}
 .roles{background:var(--panel)}
 .seg{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 26px}
@@ -187,6 +194,7 @@ footer{padding:20px max(5vw,16px);font-size:14px;color:#7f97ae;border-top:1px so
         <div class="eye" data-box="318,296,70,30" data-sp="333,295,34" data-m="img/openL.png"><img src="img/irisL.png" alt=""></div>
         <div class="eye" data-box="440,292,64,32" data-sp="450,293,34" data-m="img/openR.png"><img src="img/irisR.png" alt=""></div>
       </div>
+      <button type="button" class="eyetog" id="eyeTog" aria-pressed="true"><i></i><span>Eyes follow cursor</span></button>
     </div>
   </div>
 </header>
@@ -427,9 +435,18 @@ const eyes=[...document.querySelectorAll('.eye')].map(el=>{
  return {el,im,sz};
 });
 const MX=4,UP=1.5,DOWN=0.8;
-let px=null,py=null,last=0,tx=0,ty=0,x=0,y=0,nextJump=0,nextIdle=0;
+let px=null,py=null,last=0,tx=0,ty=0,x=0,y=0,nextJump=0,nextIdle=0,on=true,running=false;
 addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;last=performance.now()},{passive:true});
 addEventListener('pointerdown',e=>{px=e.clientX;py=e.clientY;last=performance.now()},{passive:true});
+const tog=document.getElementById('eyeTog');
+try{if(localStorage.getItem('ced-eyes')==='off')on=false}catch(e){}
+function setOn(v){
+ on=v;tog.setAttribute('aria-pressed',v);
+ try{localStorage.setItem('ced-eyes',v?'on':'off')}catch(e){}
+ if(!v){x=y=tx=ty=0;for(const e of eyes)e.im.style.transform=''}
+ else if(!running&&motionOK){running=true;requestAnimationFrame(frame)}
+}
+tog.addEventListener('click',()=>setOn(!on));
 function gaze(){
  const a=eyes[0].el.getBoundingClientRect(),b=eyes[1].el.getBoundingClientRect();
  const cx=(a.left+a.right+b.left+b.right)/4,cy=(a.top+a.bottom+b.top+b.bottom)/4;
@@ -437,14 +454,17 @@ function gaze(){
  return [dx/d*k,dy/d*k*1.2];
 }
 function frame(now){
+ if(!on){running=false;return}
  const active=px!==null&&now-last<5000;
  if(active&&now>nextJump){const [gx,gy]=gaze();if(Math.hypot(gx-tx,gy-ty)>.08){tx=gx;ty=gy}nextJump=now+90}
  else if(!active&&now>nextIdle){tx=(Math.random()-.5)*1.1;ty=(Math.random()-.5)*.6;nextIdle=now+900+Math.random()*2200}
  x+=(tx-x)*.42;y+=(ty-y)*.42;const yy=y<0?y*UP:y*DOWN;
  for(const e of eyes)e.im.style.transform=`translate(${x*MX/e.sz*100}%,${yy/e.sz*100}%)`;
- requestAnimationFrame(frame);
+ if(on)requestAnimationFrame(frame);else running=false;
 }
-if(eyes.length===2&&!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(frame);
+const motionOK=eyes.length===2&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!motionOK)tog.hidden=true;
+setOn(on);
 }
 }
 </script>
